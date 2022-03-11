@@ -1,6 +1,8 @@
 #include <iostream>
+#include <string>
 using namespace std;
 int ucln(int a, int b);
+int bcnn(int a, int b);
 class PS
 {
 private:
@@ -32,6 +34,17 @@ public:
         out << ps.ts << "/" << ps.ms;
         return out;
     }
+    friend PS operator+(PS a, PS b)
+    {
+        PS tong;
+        int mc = bcnn(a.ms, b.ms);
+        tong.ts = mc / a.ms * a.ts + mc / b.ms * b.ts;
+        tong.ms = mc;
+        int g = ucln(tong.ts, tong.ms);
+        tong.ts = tong.ts / g;
+        tong.ms = tong.ms / g;
+        return tong;
+    }
 };
 int ucln(int a, int b)
 {
@@ -39,10 +52,15 @@ int ucln(int a, int b)
         return a;
     return ucln(b, a % b);
 }
+int bcnn(int a, int b)
+{
+    return a / ucln(a, b) * b;
+}
 int main()
 {
-    PS ps;
-    cin >> ps;
-    ps.rutgon();
-    cout << ps;
+    PS ps1, ps2;
+    cin >> ps1;
+    cin >> ps2;
+    cout << ps1 + ps2;
+    return 0;
 }
